@@ -5,18 +5,20 @@ import { IoIosSearch } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 
 const navbar = () => {
-  // const [search, setSearch] = useState(true);
+
   const languages = ["azerbaijan", "russia", "united-kingdom"];
 
-  // Получаем язык из localStorage или ставим дефолтный "azerbaijan"
-  const savedLang = localStorage.getItem("lang") || "azerbaijan";
-
-  // Инициализируем массив lang с выбранным языком первым
-  const [lang, setLang] = useState(
-    [savedLang, ...languages.filter((l) => l !== savedLang)]
-  );
+  // сначала ставим дефолтный язык
+  const [lang, setLang] = useState(languages);
 
   const [search, setSearch] = useState(true);
+
+  // получаем localStorage только на клиенте
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang") || "azerbaijan";
+    const newOrder = [savedLang, ...languages.filter((l) => l !== savedLang)];
+    setLang(newOrder);
+  }, []);
 
   const changeSearch = () => {
     setSearch(!search);
@@ -27,11 +29,6 @@ const navbar = () => {
     setLang(newOrder);
     localStorage.setItem("lang", selected);
   };
-
-  useEffect(() => {
-    console.log("Текущий язык:", lang[0]);
-  }, [lang]);
-
   return (
     <header className="w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
       <div className="h-12 text-black flex items-center justify-between">

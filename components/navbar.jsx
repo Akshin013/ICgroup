@@ -134,7 +134,7 @@ const Navbar = () => {
                       <li key={link.name}>
                         <Link
                           href={link.href}
-                          className="block py-1 hover:text-amber-500"
+                          className="block py-1 hover:text-amber-500" onClick={() => setMenuOpen(false)}
                         >
                           {link.name}
                         </Link>

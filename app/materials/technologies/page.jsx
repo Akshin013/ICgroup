@@ -13,7 +13,7 @@ const TechnologiesPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Технологии</h1>
+      <h1 className="text-3xl font-bold mbн6">Технологии</h1>
       <ul className="list-decimal list-inside space-y-2">
         {technologies.map((tech, idx) => (
           <li key={idx} className="text-lg text-gray-800">

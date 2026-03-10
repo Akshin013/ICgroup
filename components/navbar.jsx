@@ -13,18 +13,21 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("lang") || "azerbaijan";
-    const newOrder = [savedLang, ...languages.filter((l) => l !== savedLang)];
-    setLang(newOrder);
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("lang") || "azerbaijan";
+      const newOrder = [savedLang, ...languages.filter((l) => l !== savedLang)];
+      setLang(newOrder);
+    }
   }, []);
-
   const toggleSearch = () => setSearch(!search);
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const changeLang = (selected) => {
     const newOrder = [selected, ...languages.filter((l) => l !== selected)];
     setLang(newOrder);
-    localStorage.setItem("lang", selected);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("lang", selected);
+    }
   };
 
   const navLinks = [
@@ -43,8 +46,14 @@ const Navbar = () => {
         { name: "Статьи", href: "/materials/articles" },
         { name: "Технологии", href: "/materials/technologies" },
         { name: "Искусственный Интеллект", href: "/materials/technologies/AI" },
-        { name: "Голографические технологии", href: "/materials/technologies/HolographicTechnology" },
-        { name: "Таблица языков программирования", href: "/materials/technologies/TableOfProgrammingLanguages" },
+        {
+          name: "Голографические технологии",
+          href: "/materials/technologies/HolographicTechnology",
+        },
+        {
+          name: "Таблица языков программирования",
+          href: "/materials/technologies/TableOfProgrammingLanguages",
+        },
         { name: "Что такое 1С", href: "/materials/technologies/WhatIs1C" },
         { name: "Администратор 1С", href: "/materials/technologies/Admin1C" },
       ],
@@ -72,7 +81,9 @@ const Navbar = () => {
           <nav className="hidden sm:flex items-center gap-6">
             {navLinks.map((nav) => (
               <div key={nav.title} className="relative group">
-                <span className="cursor-pointer hover:text-amber-500">{nav.title}</span>
+                <span className="cursor-pointer hover:text-amber-500">
+                  {nav.title}
+                </span>
                 <ul className="absolute left-0 top-full mt-2 w-52 bg-white text-black shadow-lg rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   {nav.links.map((link) => (
                     <li key={link.name} className="px-4 py-2 hover:bg-gray-100">
@@ -88,7 +99,11 @@ const Navbar = () => {
               <img className="h-8" src={`/${lang[0]}.png`} alt={lang[0]} />
               <ul className="absolute left-0 top-full mt-2 w-32 bg-white text-black shadow-lg rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                 {lang.slice(1).map((l) => (
-                  <li key={l} onClick={() => changeLang(l)} className="px-4 py-2 hover:bg-gray-100">
+                  <li
+                    key={l}
+                    onClick={() => changeLang(l)}
+                    className="px-4 py-2 hover:bg-gray-100"
+                  >
                     <img className="h-8" src={`/${l}.png`} alt={l} />
                   </li>
                 ))}
@@ -117,7 +132,10 @@ const Navbar = () => {
                   <ul className="pl-4 flex flex-col gap-1">
                     {nav.links.map((link) => (
                       <li key={link.name}>
-                        <Link href={link.href} className="block py-1 hover:text-amber-500">
+                        <Link
+                          href={link.href}
+                          className="block py-1 hover:text-amber-500"
+                        >
                           {link.name}
                         </Link>
                       </li>
@@ -131,7 +149,13 @@ const Navbar = () => {
                 <span className="font-semibold block mb-2">Язык</span>
                 <div className="flex gap-2">
                   {lang.map((l) => (
-                    <img key={l} className="h-8 cursor-pointer" src={`/${l}.png`} alt={l} onClick={() => changeLang(l)} />
+                    <img
+                      key={l}
+                      className="h-8 cursor-pointer"
+                      src={`/${l}.png`}
+                      alt={l}
+                      onClick={() => changeLang(l)}
+                    />
                   ))}
                 </div>
               </div>
